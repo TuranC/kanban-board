@@ -1,0 +1,47 @@
+.column-settings-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 10px;
+  margin-right: 10px;
+
+  .column-settings-form {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  .column-title {
+    cursor: pointer;
+  }
+
+  .column-setting {
+    cursor: pointer;
+    margin-top: 8px;
+    margin-left: 10px;
+    align-items: center;
+  }
+
+  .column-setting-check {
+    cursor: pointer;
+    margin-top: 8px;
+    margin-left: 10px;
+    padding: 0;
+    align-items: center;
+    background-color: transparent;
+    border: none;
+    outline: none;
+  }
+
+  .column-input {
+    width: 100%;
+    margin-top: 10px;
+    border-radius: 5px;
+    border: none;
+    padding: 8px;
+    outline: none;
+  }
+}

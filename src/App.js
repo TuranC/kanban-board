@@ -9,20 +9,15 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      columns: [
-        {
-          title: 'new column',
-          cards: ['text card', 'one more'],
-        },
-      ],
+      columns: [],
     };
   }
 
   handleAddColumn = () => {
     const columnsArray = [];
     const newColumn = {
-      title: 'new column',
-      cards: ['card'],
+      title: '',
+      cards: [],
     };
     const { columns } = this.state;
     columns.push(newColumn);
@@ -41,7 +36,11 @@ class App extends React.Component {
     const initColumns = columns.map((col) => {
       const { title, cards } = col;
       return (
-        <Column title={title} cards={cards} key={`column${key++}`} />
+        <Column
+          title={title}
+          cards={cards}
+          key={`column${key++}`}
+        />
       );
     });
     return (
