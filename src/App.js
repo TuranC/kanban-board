@@ -15,12 +15,8 @@ class App extends React.Component {
 
   handleAddColumn = () => {
     const columnsArray = [];
-    const newColumn = {
-      title: '',
-      cards: [],
-    };
     const { columns } = this.state;
-    columns.push(newColumn);
+    columns.push(<Column key={`column${key++}`} />);
 
     for (const col of columns) {
       columnsArray.push(col);
@@ -33,16 +29,7 @@ class App extends React.Component {
 
   render() {
     const { columns } = this.state;
-    const initColumns = columns.map((col) => {
-      const { title, cards } = col;
-      return (
-        <Column
-          title={title}
-          cards={cards}
-          key={`column${key++}`}
-        />
-      );
-    });
+    const initColumns = columns.map((col) => col);
     return (
       <div className="bg-secondary" id="kanban-board">
         <div className="kanban-board-inner">

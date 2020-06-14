@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './ColumnSettings.scss';
+import './EditColumnTitle.scss';
 
-class ColumnSettings extends React.Component {
+class EditColumnTitle extends React.Component {
   render() {
     let change = this.props.changeTag;
     const inputOrH3 = [
@@ -40,7 +40,7 @@ class ColumnSettings extends React.Component {
   }
 }
 
-ColumnSettings.propTypes = {
+EditColumnTitle.propTypes = {
   title: PropTypes.string.isRequired,
   changeTag: PropTypes.bool.isRequired,
   handleChange: PropTypes.func.isRequired,
@@ -49,4 +49,4 @@ ColumnSettings.propTypes = {
   isChangedTag: PropTypes.bool.isRequired,
 };
 
-export default ColumnSettings;
+export default EditColumnTitle;

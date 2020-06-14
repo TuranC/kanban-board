@@ -1,11 +1,9 @@
 import React from 'react';
 import './Column.scss';
-import PropTypes from 'prop-types';
 import Card from './Card';
-import ColumnSettings from './settings/ColumnSettings';
+import EditColumnTitle from './editing/EditColumnTitle';
 
 let key = 0;
-const colSetKey = 0;
 
 class Column extends React.Component {
   constructor(props) {
@@ -19,8 +17,12 @@ class Column extends React.Component {
   }
 
   handleAddCard = () => {
+    const { cards } = this.state;
+
+    cards.push(<Card key={`card${key++}`} />);
+
     this.setState({
-      cards: this.props.cards.push('new card'),
+      cards,
     });
   }
 
@@ -47,25 +49,22 @@ class Column extends React.Component {
 
   render() {
     const classesCardField = ['card-field'];
-    const cards = this.props.cards.map((card) => (
-      <Card cardText={card} key={`card${key++}`} />
-    ));
+    const cards = this.state.cards.map((card) => card);
 
-    if (this.props.cards.length === 0) {
+    if (this.state.cards.length === 0) {
       classesCardField.push('card-field-default');
     }
     const changeTag = true;
 
     return (
       <div className="column bg-primary">
-        <ColumnSettings
+        <EditColumnTitle
           title={this.state.title}
           changeTag={changeTag}
           handleSubmit={this.handleSubmit}
           handleChange={this.handleChange}
           handleChangeTag={this.handleChangeTag}
           isChangedTag={this.state.isChangedTag}
-
         />
         <div className={classesCardField.join(' ')}>
           {cards}
@@ -75,10 +74,5 @@ class Column extends React.Component {
     );
   }
 }
-
-Column.propTypes = {
-  title: PropTypes.string.isRequired,
-  cards: PropTypes.array.isRequired,
-};
 
 export default Column;
