@@ -2,43 +2,35 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './EditColumnTitle.scss';
 
-class EditColumnTitle extends React.Component {
-  render() {
-    let change = this.props.changeTag;
-    const inputOrH3 = [
-      <h3 className="text-center mt-2 column-title" onClick={this.props.handleChangeTag}>{this.props.title}</h3>,
-      <i className="fas fa-ellipsis-v column-setting" />,
-    ];
+const EditColumnTitle = (props) => {
+  let inputOrH3 = (
+    <div className="column-settings-title">
+      <h3 className="text-center mt-2 column-title" onClick={props.handleChangeTag}>{props.title}</h3>
+      <i className="fas fa-ellipsis-v column-setting" onClick={props.handleSettings} />
+    </div>
+  );
 
-    if (!this.props.isChangedTag) {
-      if (change) {
-        const form = (
-          <form onSubmit={this.props.handleSubmit} className="column-settings-form">
+  if (!props.isChangedTag) {
+    if (props.changeTag) {
+      inputOrH3 = (
+        <div className="column-settings-title">
+          <form onSubmit={props.handleSubmit} className="column-settings-form">
             <input
               type="text"
-              value={this.props.title}
+              value={props.title}
               placeholder="write title"
               className="column-input"
-              onChange={this.props.handleChange}
+              onChange={props.handleChange}
             />
             <button type="submit" className="fas fa-check column-setting-check" />
           </form>
-        );
-
-        inputOrH3.shift();
-        inputOrH3.shift();
-        inputOrH3.push(form);
-        change = false;
-      }
+        </div>
+      );
     }
-
-    return (
-      <div className="column-settings-title">
-        {inputOrH3}
-      </div>
-    );
   }
-}
+
+  return inputOrH3;
+};
 
 EditColumnTitle.propTypes = {
   title: PropTypes.string.isRequired,
@@ -47,6 +39,7 @@ EditColumnTitle.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   handleChangeTag: PropTypes.func.isRequired,
   isChangedTag: PropTypes.bool.isRequired,
+  handleSettings: PropTypes.func.isRequired,
 };
 
 export default EditColumnTitle;

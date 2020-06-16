@@ -24,6 +24,7 @@ module.exports = {
     ],
     "rules": {
         "react/destructuring-assignment": [1, "always"],
+        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     },
     "parser": "babel-eslint"
 };
