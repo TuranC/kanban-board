@@ -1,7 +1,9 @@
 import React from 'react';
 import './Column.scss';
+import PropTypes from 'prop-types';
 import Card from './Card';
 import EditColumnTitle from './editing/EditColumnTitle';
+import ColumnSettings from './settings/ColumnSettings';
 
 class Column extends React.Component {
   constructor(props) {
@@ -19,7 +21,7 @@ class Column extends React.Component {
     const { cards } = this.state;
     const id = `Column${Math.floor(Math.random() * 1000000)}`;
     if (!cards.has(id)) {
-      cards.set(id, <Card key={id} />);
+      cards.set(id, <Card key={id} handleDeleteCard={this.handleDeleteCard} id={id} />);
     }
 
     this.setState({
@@ -54,6 +56,12 @@ class Column extends React.Component {
     });
   }
 
+  handleDeleteCard = (id) => {
+    const { cards } = this.state;
+    cards.delete(id.target.id);
+    this.setState({ cards });
+  }
+
   render() {
     const classesCardField = ['card-field'];
     const cards = [];
@@ -67,17 +75,11 @@ class Column extends React.Component {
     let columnOrSettings;
     if (this.state.settingsClicked) {
       columnOrSettings = (
-        <div className="column bg-primary">
-          <div className="column-settings">
-            <div className="column-settings-close">
-              <i className="fas fa-times" onClick={this.handleSettings} />
-            </div>
-            <div className="column-settings-buttons">
-              <button className="column-setting-button">Delete column</button>
-              <button className="column-setting-button">some setting</button>
-            </div>
-          </div>
-        </div>
+        <ColumnSettings
+          handleSettings={this.handleSettings}
+          handleDeleteColumn={this.props.handleDeleteColumn}
+          id={this.props.id}
+        />
       );
     } else {
       columnOrSettings = (
@@ -106,5 +108,10 @@ class Column extends React.Component {
     return columnOrSettings;
   }
 }
+
+Column.propTypes = {
+  id: PropTypes.string.isRequired,
+  handleDeleteColumn: PropTypes.func.isRequired,
+};
 
 export default Column;

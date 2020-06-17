@@ -15,11 +15,17 @@ class App extends React.Component {
     const { columns } = this.state;
     const id = `Column${Math.floor(Math.random() * 1000000)}`;
     if (!columns.has(id)) {
-      columns.set(id, <Column key={id} />);
+      columns.set(id, <Column key={id} id={id} handleDeleteColumn={this.handleDeleteColumn} />);
     }
     this.setState({
       columns,
     });
+  }
+
+  handleDeleteColumn = (id) => {
+    const { columns } = this.state;
+    columns.delete(id.target.id);
+    this.setState({ columns });
   }
 
   render() {
