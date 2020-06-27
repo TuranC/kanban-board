@@ -1,6 +1,5 @@
 import React from 'react';
 import Column from '../../components/Column/Column';
-import Card from '../../components/Card/Card';
 
 function copyColumn(columns) {
   const copy = new Map();
@@ -21,16 +20,15 @@ function hasAllColumnsTitle(columns) {
   return result;
 }
 
-function addCard(columns, id) {
+function addCard(columns, card, columnId, cardId) {
   const modifiedState = copyColumn(columns);
 
-  if (hasAllColumnsTitle(modifiedState)) {
-    const column = modifiedState.get(id);
-    const newId = `Card:${Math.floor(Math.random() * 1000000)}`;
-
-    if (!column.cards.has(newId)) {
-      column.cards.set(newId, <Card key={newId} cardId={newId} />);
-    }
+  if (!modifiedState.get(columnId).cards.has(cardId)) {
+    const newCard = {
+      title: '',
+      component: card,
+    };
+    modifiedState.get(columnId).cards.set(cardId, newCard);
   }
   return modifiedState;
 }
@@ -44,6 +42,7 @@ function addColumn(columns) {
         title: '',
         id,
         cards: new Map(),
+        cardSettingsClicked: false,
       };
       columnState.component = <Column key={id} columnId={id} />;
       modifiedState.set(id, columnState);
@@ -64,6 +63,25 @@ function deleteColumn(columns, id) {
   return modifiedState;
 }
 
+function cardClicked(columns, id) {
+  const modifiedState = copyColumn(columns);
+  modifiedState.get(id).cardSettingsClicked = !modifiedState.get(id).cardSettingsClicked;
+  return modifiedState;
+}
+
+function submitCardTitle(columns, title, columnId, cardId) {
+  const modifiedState = copyColumn(columns);
+  modifiedState.get(columnId).cards.get(cardId).title = title;
+  return modifiedState;
+}
+
+function deleteCard(columns, columnId, cardId) {
+  const modifiedState = copyColumn(columns);
+  modifiedState.get(columnId).cards.delete(cardId);
+  modifiedState.get(columnId).cardSettingsClicked = !modifiedState.get(columnId).cardSettingsClicked;
+  return modifiedState;
+}
+
 const initialState = {
   columns: new Map(),
 };
@@ -74,13 +92,22 @@ export default function appReducer(state = initialState, action) {
       columns: addColumn(state.columns),
     };
     case 'ADD_CARD': return {
-      columns: addCard(state.columns, action.id),
+      columns: addCard(state.columns, action.card, action.columnId, action.cardId),
     };
     case 'SUBMIT_TITLE': return {
       columns: submitTitle(state.columns, action.title, action.id),
     };
     case 'DELETE_COLUMN': return {
       columns: deleteColumn(state.columns, action.id),
+    };
+    case 'CARD_CLICKED': return {
+      columns: cardClicked(state.columns, action.id),
+    };
+    case 'SUBMIT_CARD_TITLE': return {
+      columns: submitCardTitle(state.columns, action.title, action.columnId, action.cardId),
+    };
+    case 'DELETE_CARD': return {
+      columns: deleteCard(state.columns, action.columnId, action.cardId),
     };
     default: return state;
   }

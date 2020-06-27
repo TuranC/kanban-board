@@ -9,7 +9,6 @@ class EditColumnTitle extends React.Component {
 
     this.state = {
       input: '',
-      editTitleClicked: true,
     };
   }
 
@@ -22,23 +21,13 @@ class EditColumnTitle extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault();
     if (this.state.input !== '') {
-      this.setState((prevState) => ({
-        editTitleClicked: !prevState.editTitleClicked,
-      }));
-
+      this.props.handleEditTitleClicked();
       this.props.submitTitle(this.state.input, this.props.columnId);
     }
   }
 
-  handleOpenEditTitle = () => {
-    this.setState((prevState) => ({
-      editTitleClicked: !prevState.editTitleClicked,
-    }));
-  }
-
   render() {
     const column = this.props.columns.get(this.props.columnId);
-
     let inputOrTitle = (
       <>
         <form className="column-title-and-setting-form" onSubmit={this.handleSubmit}>
@@ -48,15 +37,14 @@ class EditColumnTitle extends React.Component {
       </>
     );
 
-    if (!this.state.editTitleClicked || column.title !== '') {
+    if (!this.props.editTitleClicked) {
       inputOrTitle = (
         <>
-          <h1 onClick={this.handleOpenEditTitle} className="text-dark title">{column.title}</h1>
+          <h1 onClick={this.props.handleEditTitleClicked} className="text-dark title">{column.title}</h1>
           <i onClick={this.props.handleClickedSetting} className="fas fa-ellipsis-h settings" />
         </>
       );
     }
-
     return inputOrTitle;
   }
 }
@@ -66,6 +54,8 @@ EditColumnTitle.propTypes = {
   columns: PropTypes.object.isRequired,
   submitTitle: PropTypes.func.isRequired,
   handleClickedSetting: PropTypes.func.isRequired,
+  handleEditTitleClicked: PropTypes.func.isRequired,
+  editTitleClicked: PropTypes.bool.isRequired,
 };
 
 function mapStateToProps(state) {

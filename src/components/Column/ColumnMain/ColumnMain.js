@@ -7,8 +7,7 @@ import './ColumnMain.scss';
 const ColumnMain = (props) => {
   const column = props.columns.get(props.columnId);
   const cards = [];
-  column.cards.forEach((col) => cards.push(col));
-  console.log('in ColumnMain', column);
+  column.cards.forEach((col) => cards.push(col.component));
 
   return (
     <div className="column">
@@ -17,11 +16,13 @@ const ColumnMain = (props) => {
           <EditColumnTitle
             handleClickedSetting={props.handleClickedSetting}
             columnId={props.columnId}
+            handleEditTitleClicked={props.handleEditTitleClicked}
+            editTitleClicked={props.editTitleClicked}
           />
         </div>
         <div className="column-cards">
           {cards}
-          <button type="button" className="column-add-card" onClick={() => props.addCard(props.columnId)}>
+          <button type="button" className="column-add-card" onClick={props.handleAddCard}>
             <i className="fas fa-plus" />
             &nbsp;
             Add Card
@@ -34,9 +35,11 @@ const ColumnMain = (props) => {
 
 ColumnMain.propTypes = {
   columnId: PropTypes.string.isRequired,
-  addCard: PropTypes.func.isRequired,
   columns: PropTypes.object,
   handleClickedSetting: PropTypes.func.isRequired,
+  handleAddCard: PropTypes.func.isRequired,
+  handleEditTitleClicked: PropTypes.func.isRequired,
+  editTitleClicked: PropTypes.bool.isRequired,
 };
 
 function mapStateToProps(state) {
@@ -45,10 +48,4 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    addCard: (id) => dispatch({ type: 'ADD_CARD', id }),
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ColumnMain);
+export default connect(mapStateToProps)(ColumnMain);

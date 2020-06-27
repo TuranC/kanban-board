@@ -5,17 +5,16 @@ import PropTypes from 'prop-types';
 
 const ColumnSetting = (props) => {
   const column = props.columns.get(props.columnId);
-  console.log('in Columnsetting', column);
 
   return (
     <div className="column">
       <div className="column-inner">
         <div className="column-setting-info">
           <h1 className="column-setting-title">{column.title}</h1>
-          <button onClick={props.handleClickedSetting} className="column-setting-button"><i className="fas fa-times" /></button>
+          <button type="button" onClick={props.handleClickedSetting} className="column-setting-button"><i className="fas fa-times" /></button>
         </div>
         <div className="column-setting">
-          <button onClick={() => props.deleteColumn(props.columnId)} className="column-setting-button delete">Delete Column</button>
+          <button type="button" onClick={() => props.deleteColumn(props.columnId)} className="column-setting-button delete">Delete Column</button>
         </div>
       </div>
     </div>
