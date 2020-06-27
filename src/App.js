@@ -1,48 +1,43 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import './App.scss';
-import Column from './components/Column';
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
+const App = (props) => {
+  const columns = [];
+  props.columns.forEach((col) => columns.push(col.component));
 
-    this.state = {
-      columns: new Map(),
-    };
-  }
-
-  handleAddColumn = () => {
-    const { columns } = this.state;
-    const id = `Column${Math.floor(Math.random() * 1000000)}`;
-    if (!columns.has(id)) {
-      columns.set(id, <Column key={id} id={id} handleDeleteColumn={this.handleDeleteColumn} />);
-    }
-    this.setState({
-      columns,
-    });
-  }
-
-  handleDeleteColumn = (id) => {
-    const { columns } = this.state;
-    columns.delete(id.target.id);
-    this.setState({ columns });
-  }
-
-  render() {
-    const initColumns = [];
-    this.state.columns.forEach((col) => initColumns.push(col));
-
-    return (
-      <div className="bg-secondary" id="kanban-board">
-        <div className="kanban-board-inner">
-          <div className="kanban-board-adaptive">
-            {initColumns}
-            <button type="button" className="kanban-board-button" onClick={this.handleAddColumn}>Add new column</button>
-          </div>
+  return (
+    <div className="bg-primary app-kanban-board">
+      <div className="kanban-board">
+        <div className="kanban-board-columns">
+          {columns}
+          <button type="button" className="kanban-board-button" onClick={props.addColumn}>
+            <i className="fas fa-plus" />
+            &nbsp;
+            Add Column
+          </button>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
+};
+
+App.propTypes = {
+  columns: PropTypes.object.isRequired,
+  addColumn: PropTypes.func.isRequired,
+};
+
+function mapStateToProps(state) {
+  return {
+    columns: state.appReducer.columns,
+  };
 }
 
-export default App;
+function mapDispatchToProps(dispatch) {
+  return {
+    addColumn: () => dispatch({ type: 'ADD_COLUMN' }),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
