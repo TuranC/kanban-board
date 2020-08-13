@@ -49,14 +49,17 @@
     "eslint-config-airbnb": "^18.1.0",
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-react": "^7.20.0",
+    "eslint-plugin-react": "^7.20.3",
     "eslint-plugin-react-hooks": "^2.5.0",
+    "idb": "^5.0.4",
     "prop-types": "^15.7.2",
+    "react-beautiful-dnd": "^13.0.0",
     "react-redux": "^7.2.0",
     "redux": "^4.0.5",
     "sass": "^1.26.8",
     "sass-loader": "^8.0.2",
     "style-loader": "^1.2.1",
+    "styled-components": "^5.1.1",
     "webpack-cli": "^3.3.11"
   }
 }

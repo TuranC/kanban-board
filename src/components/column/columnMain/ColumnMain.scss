@@ -1,0 +1,17 @@
+.column-main {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.column-main-add-card-button {
+  width: 100%;
+  border: none;
+  border-radius: 3px;
+  height: 50px;
+  margin-top: 10px;
+
+  &:hover {
+    background-color: lightgrey;
+  }
+}

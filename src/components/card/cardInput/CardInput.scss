@@ -1,0 +1,24 @@
+.card-form {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 5px;
+
+  .card-form-input {
+    width: 80%;
+    background-color: lightgrey;
+    border: none;
+    border-radius: 3px;
+  }
+
+  .card-form-button {
+    border: none;
+    border-radius: 3px;
+
+    &:hover {
+      background-color: lightgrey;
+      border-radius: 3px;
+    }
+  }
+}
