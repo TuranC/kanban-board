@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import './ColumnInput.scss';
+import { SET_COLUMN_TITLE } from '../../../redux/actionConst/actionConst';
 
 class ColumnInput extends React.Component {
   constructor(props) {
@@ -28,7 +29,7 @@ class ColumnInput extends React.Component {
 
     handleEditingColumnTitle(false);
     if (input !== '') {
-      dispatch({ type: 'SET_COLUMN_TITLE', id: column.columnId, newTitle: input });
+      dispatch({ type: SET_COLUMN_TITLE, id: column.columnId, newTitle: input });
     }
   }
 
@@ -45,7 +46,7 @@ class ColumnInput extends React.Component {
             className="column-form-input"
             placeholder={column.title === '' ? 'New Title' : column.title}
           />
-          <button type="submit" className="column-form-button"><i className="fas fa-check" /></button>
+          <button aria-label="submit-form-button" type="submit" className="column-form-button"><i className="fas fa-check" /></button>
         </form>
         {children}
       </>
@@ -53,11 +54,25 @@ class ColumnInput extends React.Component {
   }
 }
 
+ColumnInput.defaultProps = {
+  column: {
+    cardIds: [],
+    title: '',
+    columnId: '',
+  },
+};
+
 ColumnInput.propTypes = {
   handleEditingColumnTitle: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
   provided: PropTypes.object.isRequired,
-  column: PropTypes.object.isRequired,
+  column: PropTypes.shape({
+    cardIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+    title: PropTypes.string.isRequired,
+    columnId: PropTypes.string.isRequired,
+  }),
   dispatch: PropTypes.func.isRequired,
+  children: PropTypes.element.isRequired,
 };
 
 export default connect()(ColumnInput);

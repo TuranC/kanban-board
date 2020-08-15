@@ -1,7 +1,7 @@
 import { openDB } from 'idb';
 
 async function connectDB() {
-  const db = await openDB('kanban-board-db', 1, {
+  const db = await openDB('kanban-board-DB', 1, {
     upgrade(database) {
       const dBase = database.createObjectStore('data');
       dBase.createIndex('columns', 'columnId');
@@ -15,17 +15,17 @@ async function connectDB() {
 
 function fromArrayToObj(data) {
   const obj = {};
-  for (const elem of data) {
+  Object.values(data).forEach((elem) => {
     obj[elem.columnId] = elem;
-  }
+  });
   return obj;
 }
 
-function fromArrayCardToObj(cards) {
+function transformArrayCardToObj(cards) {
   const obj = {};
-  for (const elem of cards) {
+  Object.values(cards).forEach((elem) => {
     obj[elem.cardId] = elem;
-  }
+  });
   return obj;
 }
 
@@ -38,7 +38,7 @@ export async function getAllData() {
 
   const columnOrder = await store.get('order');
   const data = {
-    cards: fromArrayCardToObj(cards),
+    cards: transformArrayCardToObj(cards),
     columns: fromArrayToObj(columns),
     columnOrder,
   };
@@ -48,6 +48,7 @@ export async function getAllData() {
 
 export async function addColumnDB(column) {
   const db = await connectDB();
+
   const store = db.transaction('data', 'readwrite').objectStore('data');
   const columnOrder = await store.get('order') || [];
   columnOrder.push(column.columnId);
@@ -62,9 +63,9 @@ export async function deleteColumnDB(columnId, columnOrderIndex) {
 
   const column = await store.get(columnId);
 
-  for await (const card of column.cardIds) {
-    await store.delete(card);
-  }
+  Object.values(column.cardIds).forEach(async (elem) => {
+    await store.delete(elem);
+  });
 
   await store.delete(columnId);
   const columnOrder = await store.get('order');

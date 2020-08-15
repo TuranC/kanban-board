@@ -44,12 +44,33 @@ class ColumnCardList extends React.Component {
   }
 }
 
+ColumnCardList.defaultProps = {
+  column: {
+    cardIds: [],
+    title: '',
+    columnId: '',
+  },
+  cardList: [],
+  columns: {},
+};
+
 ColumnCardList.propTypes = {
-  column: PropTypes.object.isRequired,
-  cardList: PropTypes.array.isRequired,
+  column: PropTypes.shape({
+    cardIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+    title: PropTypes.string.isRequired,
+    columnId: PropTypes.string.isRequired,
+  }),
+  cardList: PropTypes.arrayOf(PropTypes.shape({
+    cardId: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired,
+  })),
   handleAddCard: PropTypes.func.isRequired,
   handleDeleteCard: PropTypes.func.isRequired,
-  columns: PropTypes.object.isRequired,
+  columns: PropTypes.objectOf(PropTypes.shape({
+    columnId: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    cardIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+  })),
 };
 
 function mapStateToProps(state) {

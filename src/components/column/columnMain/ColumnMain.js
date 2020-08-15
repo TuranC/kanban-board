@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import ColumnInput from '../columnInput/ColumnInput';
 import ColumnCardList from '../columnCardList/ColumnCardList';
 import './ColumnMain.scss';
+import { ADD_CARD, DELETE_CARD } from '../../../redux/actionConst/actionConst';
 
 class ColumnMain extends React.Component {
   constructor(props) {
@@ -36,26 +37,23 @@ class ColumnMain extends React.Component {
       }
       return false;
     }
+    return true;
   }
 
   handleAddCard = () => {
-    const { dispatch, cards, column } = this.props;
-    dispatch({ type: 'ADD_CARD', columnId: column.columnId });
-    this.setState({
-      cards,
-    });
+    const { dispatch, column } = this.props;
+    dispatch({ type: ADD_CARD, columnId: column.columnId });
+    this.setState({});
   }
 
   handleDeleteCard = (cardId) => {
     const { dispatch, column } = this.props;
     dispatch({
-      type: 'DELETE_CARD',
+      type: DELETE_CARD,
       columnId: column.columnId,
       cardId,
     });
-    this.setState({
-      currentCard: 'deleted',
-    });
+    this.setState({});
   }
 
   handleGetCards = () => {
@@ -86,9 +84,15 @@ class ColumnMain extends React.Component {
               <div className="column-main" {...provided.dragHandleProps}>
                 <h3
                   className="column-title"
-                  onClick={() => this.handleEditingColumnTitle(true)}
                 >
-                  {column.title}
+                  <button
+                    className="column-title-button"
+                    type="button"
+                    onClick={() => this.handleEditingColumnTitle(true)}
+                    onKeyDown={() => this.handleEditingColumnTitle(true)}
+                  >
+                    {column.title}
+                  </button>
                 </h3>
                 <button
                   type="button"
@@ -111,6 +115,18 @@ class ColumnMain extends React.Component {
   }
 }
 
+ColumnMain.defaultProps = {
+  column: {
+    cardIds: [],
+    title: '',
+    columnId: '',
+  },
+  cards: {
+    cardId: '',
+    content: '',
+  },
+};
+
 ColumnMain.propTypes = {
   column: PropTypes.shape({
     cardIds: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -118,6 +134,7 @@ ColumnMain.propTypes = {
     columnId: PropTypes.string.isRequired,
   }),
   handleSettingsColumnClicked: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
   provided: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
   cards: PropTypes.objectOf(PropTypes.shape({

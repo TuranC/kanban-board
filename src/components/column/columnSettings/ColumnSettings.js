@@ -29,7 +29,16 @@ const ColumnSettings = ({
   </div>
 );
 
+ColumnSettings.defaultProps = {
+  column: {
+    cardIds: [],
+    title: '',
+    columnId: '',
+  },
+};
+
 ColumnSettings.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
   provided: PropTypes.object.isRequired,
   column: PropTypes.shape({
     cardIds: PropTypes.arrayOf(PropTypes.string).isRequired,

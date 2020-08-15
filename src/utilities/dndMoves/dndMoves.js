@@ -1,4 +1,4 @@
-export function moveCardInColumn(result, state) {
+export default function moveCardInColumn(result, state) {
   const { cards, columns, columnOrder } = state;
   const { destination, source, draggableId } = result;
 
