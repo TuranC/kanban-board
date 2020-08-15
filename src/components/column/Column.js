@@ -16,9 +16,7 @@ class Column extends React.Component {
   }
 
   handleSettingsColumnClicked = () => {
-    this.setState({
-      settingsColumnClicked: !this.state.settingsColumnClicked,
-    });
+    this.setState((prevState) => ({ settingsColumnClicked: !prevState.settingsColumnClicked }));
   }
 
   render() {
@@ -62,8 +60,20 @@ class Column extends React.Component {
   }
 }
 
+Column.defaultProps = {
+  column: {
+    cardIds: [],
+    title: '',
+    columnId: '',
+  },
+};
+
 Column.propTypes = {
-  column: PropTypes.object.isRequired,
+  column: PropTypes.shape({
+    cardIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+    title: PropTypes.string.isRequired,
+    columnId: PropTypes.string.isRequired,
+  }),
   index: PropTypes.number.isRequired,
   handleDeleteColumn: PropTypes.func.isRequired,
 };

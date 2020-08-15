@@ -8,7 +8,7 @@
     "@testing-library/user-event": "^7.2.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1"
+    "react-scripts": "^3.4.3"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -38,6 +38,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.10.2",
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
     "@babel/preset-env": "^7.10.2",
     "@babel/preset-react": "^7.10.1",
     "@fortawesome/fontawesome-free": "^5.13.0",
@@ -51,7 +52,9 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.20.3",
     "eslint-plugin-react-hooks": "^2.5.0",
+    "html-webpack-plugin": "^4.3.0",
     "idb": "^5.0.4",
+    "mini-css-extract-plugin": "^0.10.0",
     "prop-types": "^15.7.2",
     "react-beautiful-dnd": "^13.0.0",
     "react-redux": "^7.2.0",

@@ -36,7 +36,6 @@ class Card extends React.Component {
   handleInputOrTitle = () => {
     const { card } = this.props;
     const { formOrTitle } = this.state;
-
     if (card.content !== '') {
       if (formOrTitle === false) {
         return false;
@@ -50,6 +49,7 @@ class Card extends React.Component {
       }
       return true;
     }
+    return false;
   }
 
   render() {
@@ -66,7 +66,9 @@ class Card extends React.Component {
                 {...provided.dragHandleProps}
                 className="card"
                 onMouseOver={this.handleMouseOver}
+                onFocus={this.handleMouseOver}
                 onMouseOut={this.handleMouseOut}
+                onBlur={this.handleMouseOut}
               >
                 <p>{card.content}</p>
                 <div className="card-buttons">
@@ -96,8 +98,18 @@ class Card extends React.Component {
   }
 }
 
+Card.defaultProps = {
+  card: {
+    cardId: '',
+    content: '',
+  },
+};
+
 Card.propTypes = {
-  card: PropTypes.object.isRequired,
+  card: PropTypes.shape({
+    cardId: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired,
+  }),
   index: PropTypes.number.isRequired,
   handleDeleteCard: PropTypes.func.isRequired,
 };
