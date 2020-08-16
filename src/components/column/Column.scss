@@ -34,3 +34,32 @@
     }
   }
 }
+
+@media (min-width: 320px) {
+  .column {
+    width: 270px;
+    min-width: 270px;
+    margin-right: 20px;
+  }
+}
+
+@media (min-width: 375px) {
+  .column {
+    width: 325px;
+    min-width: 325px;
+  }
+}
+
+@media (min-width: 425px) {
+  .column {
+    width: 375px;
+    min-width: 375px;
+  }
+}
+
+@media (min-width: 768px) {
+  .column {
+    width: 270px;
+    min-width: 270px;
+  }
+}
