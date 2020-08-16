@@ -82,9 +82,7 @@ class ColumnMain extends React.Component {
           : (
             <>
               <div className="column-main" {...provided.dragHandleProps}>
-                <h3
-                  className="column-title"
-                >
+                <h3 className="column-title">
                   <button
                     className="column-title-button"
                     type="button"

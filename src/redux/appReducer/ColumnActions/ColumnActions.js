@@ -29,10 +29,11 @@ class ColumnActions {
     return newState;
   }
 
-  static moveTo(state, from, to, draggableId) {
+  static moveTo(state, result) {
     const newState = { ...state };
-    newState.columnOrder.splice(from, 1);
-    newState.columnOrder.splice(to, 0, draggableId);
+    const { source, destination, draggableId } = result;
+    newState.columnOrder.splice(source.index, 1);
+    newState.columnOrder.splice(destination.index, 0, draggableId);
     DB.moveToDB(newState.columnOrder);
     return newState;
   }

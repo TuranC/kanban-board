@@ -3,14 +3,12 @@ import * as DB from '../../../DB/DB';
 class CardActions {
   static hasCardTitle(cards, column) {
     let has = true;
-
     const columnCards = column.cardIds;
     columnCards.forEach((key) => {
       if (cards[key].content === '') {
         has = false;
       }
     });
-
     return has;
   }
 
@@ -41,14 +39,14 @@ class CardActions {
     return newState;
   }
 
-  static moveToCard(state, source, destination, draggableId) {
-    const start = state.columns[source.droppableId];
-    const finish = state.columns[destination.droppableId];
+  static moveToCard(state, result) {
+    const start = state.columns[result.source.droppableId];
+    const finish = state.columns[result.destination.droppableId];
 
     if (start === finish) {
       const newCardIds = Array.from(start.cardIds);
-      newCardIds.splice(source.index, 1);
-      newCardIds.splice(destination.index, 0, draggableId);
+      newCardIds.splice(result.source.index, 1);
+      newCardIds.splice(result.destination.index, 0, result.draggableId);
 
       const newColumn = {
         ...start,

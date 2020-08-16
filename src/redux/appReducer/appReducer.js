@@ -17,13 +17,10 @@ export default function appReducer(state, action) {
       data: CardActions.deleteCard(state.data, action.columnId, action.cardId),
     };
     case actionConst.MOVE_TO: return {
-      data: ColumnActions.moveTo(state.data, action.from, action.to, action.draggableId),
+      data: ColumnActions.moveTo(state.data, action.result),
     };
     case actionConst.MOVE_TO_CARD: return {
-      data: CardActions.moveToCard(state.data,
-        action.source,
-        action.destination,
-        action.draggableId),
+      data: CardActions.moveToCard(state.data, action.result),
     };
     case actionConst.MOVE_CARD_TO_NEW_COLUMN: return {
       data: CardActions.moveCardToNewColumn(state.data, action.result),
